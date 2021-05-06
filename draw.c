@@ -290,9 +290,9 @@ void add_torus(struct matrix *polys,
      */
       if (index + steps > (latStop * latStart))
       {
-        add_polygons(polys, points->m[0][index], points->m[1][index], points->m[2][index], points->m[0][index + 1], points->m[1][index + 1], points->m[2][index + 1], points->m[0][latStop * latStart - index + 1], points->m[1][latStop * latStart - index + 1], points->m[2][latStop * latStart - index + 1]);
+        add_polygons(polys, points->m[0][index], points->m[1][index], points->m[2][index], points->m[0][index + 1], points->m[1][index + 1], points->m[2][index + 1], points->m[0][latStop * longStop - index + 1], points->m[1][latStop * longStop - index + 1], points->m[2][latStop * longStop - index + 1]);
 
-        add_polygons(polys, points->m[0][index], points->m[1][index], points->m[2][index], points->m[0][latStop * latStart - index + 1], points->m[1][latStop * latStart - index + 1], points->m[2][latStop * latStart - index + 1], points->m[0][latStop * latStart - index], points->m[1][latStop * latStart - index], points->m[2][latStop * latStart - index]);
+        add_polygons(polys, points->m[0][index], points->m[1][index], points->m[2][index], points->m[0][latStop * longStop - index + 1], points->m[1][latStop * longStop - index + 1], points->m[2][latStop * longStop - index + 1], points->m[0][latStop * longStop - index], points->m[1][latStop * longStop - index], points->m[2][latStop * longStop - index]);
       }
       else
       {
