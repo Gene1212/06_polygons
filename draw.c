@@ -288,6 +288,9 @@ void add_torus(struct matrix *polys,
                points->m[1][index] + 1,
                points->m[2][index] + 1);
      */
+      add_polygons(polys, points->m[0][index], points->m[1][index], points->m[2][index], points->m[0][index + 1], points->m[1][index + 1], points->m[2][index + 1], points->m[0][index + steps + 1], points->m[1][index + steps + 1], points->m[2][index + steps + 1]);
+
+      add_polygons(polys, points->m[0][index], points->m[1][index], points->m[2][index], points->m[0][index + steps + 1], points->m[1][index + steps + 1], points->m[2][index + steps + 1], points->m[0][index + steps], points->m[1][index + steps], points->m[2][index + steps]);
     }
   }
   free_matrix(points);
