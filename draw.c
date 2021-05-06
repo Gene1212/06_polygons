@@ -174,9 +174,16 @@ void add_sphere(struct matrix *polys,
                points->m[1][index] + 1,
                points->m[2][index] + 1);
      */
+
       if (index % steps == 0)
       {
         add_polygons(polys, points->m[0][index], points->m[1][index], points->m[2][index], points->m[0][index + 1], points->m[1][index + 1], points->m[2][index + 1], points->m[0][index + steps + 1], points->m[1][index + steps + 1], points->m[2][index + steps + 1]);
+      }
+      else if (index > (latStop * longStop))
+      {
+        add_polygons(polys, points->m[0][index], points->m[1][index], points->m[2][index], points->m[0][index + 1], points->m[1][index + 1], points->m[2][index + 1], points->m[0][(index - (latStop * longStop)) + 1], points->m[1][(index - (latStop * longStop)) + 1], points->m[2][(index - (latStop * longStop)) + 1]);
+
+        add_polygons(polys, points->m[0][index], points->m[1][index], points->m[2][index], points->m[0][(index - (latStop * longStop)) + 1], points->m[1][(index - (latStop * longStop)) + 1], points->m[2][(index - (latStop * longStop)) + 1], points->m[0][(index - (latStop * longStop))], points->m[1][(index - (latStop * longStop))], points->m[2][(index - (latStop * longStop))]);
       }
       else
       {
