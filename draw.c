@@ -163,7 +163,7 @@ void add_sphere(struct matrix *polys,
   steps++;
   for (lat = latStart; lat < latStop; lat++)
   {
-    for (longt = longStart; longt <= longStop; longt++)
+    for (longt = longStart; longt < longStop; longt++)
     {
 
       index = lat * (steps) + longt;
@@ -175,16 +175,16 @@ void add_sphere(struct matrix *polys,
                points->m[2][index] + 1);
      */
 
-      if (index % steps == 0)
+      if (index + 1 >= (latStop * longStop))
+      {
+        add_polygons(polys, points->m[0][index], points->m[1][index], points->m[2][index], points->m[0][index + 1], points->m[1][index + 1], points->m[2][index + 1], points->m[0][index - latStop * longStop + 1], points->m[1][index - latStop * longStop + 1], points->m[2][index - latStop * longStop + 1]);
+      }
+
+      else if (index % steps == 0)
       {
         add_polygons(polys, points->m[0][index], points->m[1][index], points->m[2][index], points->m[0][index + 1], points->m[1][index + 1], points->m[2][index + 1], points->m[0][index + steps + 1], points->m[1][index + steps + 1], points->m[2][index + steps + 1]);
       }
-      else if (index > (latStop * longStop))
-      {
-        add_polygons(polys, points->m[0][index], points->m[1][index], points->m[2][index], points->m[0][index + 1], points->m[1][index + 1], points->m[2][index + 1], points->m[0][(index - (latStop * longStop)) + 1], points->m[1][(index - (latStop * longStop)) + 1], points->m[2][(index - (latStop * longStop)) + 1]);
 
-        add_polygons(polys, points->m[0][index], points->m[1][index], points->m[2][index], points->m[0][(index - (latStop * longStop)) + 1], points->m[1][(index - (latStop * longStop)) + 1], points->m[2][(index - (latStop * longStop)) + 1], points->m[0][(index - (latStop * longStop))], points->m[1][(index - (latStop * longStop))], points->m[2][(index - (latStop * longStop))]);
-      }
       else
       {
         add_polygons(polys, points->m[0][index], points->m[1][index], points->m[2][index], points->m[0][index + 1], points->m[1][index + 1], points->m[2][index + 1], points->m[0][index + steps + 1], points->m[1][index + steps + 1], points->m[2][index + steps + 1]);
@@ -243,7 +243,6 @@ struct matrix *generate_sphere(double cx, double cy, double cz,
       add_point(points, x, y, z);
     }
   }
-
   return points;
 }
 
@@ -288,11 +287,12 @@ void add_torus(struct matrix *polys,
                points->m[1][index] + 1,
                points->m[2][index] + 1);
      */
-      if (index + steps > (latStop * latStart))
+      //printf("%lf %lf %lf\n",points->m[0][index + 1],points->m[1][index + 1],points->m[2][index + 1]);
+      if (index + (steps + 1) >= (latStop * longStop))
       {
-        add_polygons(polys, points->m[0][index], points->m[1][index], points->m[2][index], points->m[0][index + 1], points->m[1][index + 1], points->m[2][index + 1], points->m[0][latStop * longStop - index + 1], points->m[1][latStop * longStop - index + 1], points->m[2][latStop * longStop - index + 1]);
+        add_polygons(polys, points->m[0][index], points->m[1][index], points->m[2][index], points->m[0][index + 0], points->m[1][index + 0], points->m[2][index + 0], points->m[0][index - (lat * steps) + 1], points->m[1][index - (lat * steps) + 1], points->m[2][index - (lat * steps) + 1]);
 
-        add_polygons(polys, points->m[0][index], points->m[1][index], points->m[2][index], points->m[0][latStop * longStop - index + 1], points->m[1][latStop * longStop - index + 1], points->m[2][latStop * longStop - index + 1], points->m[0][latStop * longStop - index], points->m[1][latStop * longStop - index], points->m[2][latStop * longStop - index]);
+        add_polygons(polys, points->m[0][index], points->m[1][index], points->m[2][index], points->m[0][index - (lat * steps) + 1], points->m[1][index - (lat * steps) + 1], points->m[2][index - (lat * steps) + 1], points->m[0][index - (lat * steps)], points->m[1][index - (lat * steps)], points->m[2][index - (lat * steps)]);
       }
       else
       {
