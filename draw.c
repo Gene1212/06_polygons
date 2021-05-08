@@ -50,23 +50,31 @@ void draw_polygons(struct matrix *polygons, screen s, color c)
   }
 
   int point;
+  double view[3];
+  double normal[3];
+  normalize(view);
+
   for (point = 0; point < polygons->lastcol - 1; point += 3)
   {
-    draw_line(polygons->m[0][point],
-              polygons->m[1][point],
-              polygons->m[0][point + 1],
-              polygons->m[1][point + 1],
-              s, c);
-    draw_line(polygons->m[0][point + 1],
-              polygons->m[1][point + 1],
-              polygons->m[0][point + 2],
-              polygons->m[1][point + 2],
-              s, c);
-    draw_line(polygons->m[0][point + 2],
-              polygons->m[1][point + 2],
-              polygons->m[0][point],
-              polygons->m[1][point],
-              s, c);
+    normal = calculate_normal(polygons, point);
+    if (dot_product(normal, view) > 0)
+    {
+      draw_line(polygons->m[0][point],
+                polygons->m[1][point],
+                polygons->m[0][point + 1],
+                polygons->m[1][point + 1],
+                s, c);
+      draw_line(polygons->m[0][point + 1],
+                polygons->m[1][point + 1],
+                polygons->m[0][point + 2],
+                polygons->m[1][point + 2],
+                s, c);
+      draw_line(polygons->m[0][point + 2],
+                polygons->m[1][point + 2],
+                polygons->m[0][point],
+                polygons->m[1][point],
+                s, c);
+    }
   }
 }
 
@@ -165,7 +173,6 @@ void add_sphere(struct matrix *polys,
   {
     for (longt = longStart; longt < longStop; longt++)
     {
-
       index = lat * (steps) + longt;
       /*      add_edge(edges, points->m[0][index],
                points->m[1][index],
