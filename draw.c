@@ -6,6 +6,7 @@
 #include "draw.h"
 #include "matrix.h"
 #include "math.h"
+#include "gmath.h"
 
 /*======== void add_polygons() ==========
   Inputs:   struct matrix *polygons
@@ -56,7 +57,7 @@ void draw_polygons(struct matrix *polygons, screen s, color c)
 
   for (point = 0; point < polygons->lastcol - 1; point += 3)
   {
-    normal = calculate_normal(polygons, point);
+    &normal = calculate_normal(polygons, point);
     if (dot_product(normal, view) > 0)
     {
       draw_line(polygons->m[0][point],
