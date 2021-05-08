@@ -52,12 +52,16 @@ void draw_polygons(struct matrix *polygons, screen s, color c)
 
   int point;
   double view[3];
-  double normal[3];
+  double *normal;
   normalize(view);
 
   for (point = 0; point < polygons->lastcol - 1; point += 3)
   {
-    &normal = calculate_normal(polygons, point);
+    normal = calculate_normal(polygons, point);
+
+    //printf("%lf %lf %lf\n",normal[0],normal[1],normal[2]);
+    //printf("%lf",dot_product(normal,view));
+
     if (dot_product(normal, view) > 0)
     {
       draw_line(polygons->m[0][point],
